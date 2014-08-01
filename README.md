@@ -531,16 +531,16 @@ Deletes an input.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
 
-Outputs
+Destinations
 ------
 
 Some intro into the API.
 
-###Create Output
+###Create Destination
 
-_**POST** /v1/accounts/:account_id/inputs/:input_id/outputs_
+_**POST** /v1/accounts/:account_id/inputs/:input_id/destinations_
 
-Adds an output for an input.
+Adds an destination for an input.
 
 #### URI Path Parameters
 
@@ -548,8 +548,8 @@ Adds an output for an input.
 * ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
 #### POST Parameters
 
-* ```name``` (required) - Name for the input. (example: My Bucket)
-* ```endpoint_url``` (required) - The status of the bucket, defaults to active.
+* ```name``` (required) - Name for the input. (example: My Final Destination)
+* ```endpoint_url``` (required) - The URL the messages should be sent to.
 * ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
 * ```status``` - The status of the bucket, defaults to active.
 * ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
@@ -565,7 +565,7 @@ Adds an output for an input.
 
 ```js
 {
-	name: 'My Bucket'
+	name: 'My Final Destination'
 	delivery_order: 'random'
 	message_method: 'GET'
 	event_filters: 'account.created,message.sent'
@@ -574,20 +574,20 @@ Adds an output for an input.
 }
 ```
 
-###Update Output
+###Update Destination
 
-_**PUT** /v1/accounts/:account_id/outputs/:output_id_
+_**PUT** /v1/accounts/:account_id/destinations/:destination_id_
 
-Updates the details of an output.
+Updates the details of an destination.
 
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```output_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
 #### POST Parameters
 
-* ```name``` (required) - Name for the input. (example: My Bucket)
-* ```endpoint_url``` (required) - The status of the bucket, defaults to active.
+* ```name``` (required) - Name for the input. (example: My Final Destination)
+* ```endpoint_url``` (required) - The URL the messages should be sent to.
 * ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
 * ```status``` - The status of the bucket, defaults to active.
 * ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
@@ -603,7 +603,7 @@ Updates the details of an output.
 
 ```js
 {
-	name: 'My Bucket'
+	name: 'My Final Destination'
 	delivery_order: 'random'
 	message_method: 'GET'
 	event_filters: 'account.created,message.sent'
@@ -612,21 +612,21 @@ Updates the details of an output.
 }
 ```
 
-###Get Output
+###Get Destination
 
-_**GET** /v1/accounts/:account_id/outputs/:output_id_
+_**GET** /v1/accounts/:account_id/destinations/:destination_id_
 
-Returns the details for a specfic output.
+Returns the details for a specfic destination.
 
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```output_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
-###List Output
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+###List Destination
 
-_**GET** /v1/accounts/:account_id/inputs/:input_id/outputs_
+_**GET** /v1/accounts/:account_id/inputs/:input_id/destinations_
 
-Returns a collection of outputs.
+Returns a collection of destinations.
 
 #### URI Path Parameters
 
@@ -634,18 +634,18 @@ Returns a collection of outputs.
 * ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
 #### Query Parameters
 
-* ```output_key``` - Name for the bucket.
+* ```destination_key``` - Name for the bucket.
 
-###Delete Output
+###Delete Destination
 
-_**DELETE** /v1/accounts/:account_id/outputs/:output_id_
+_**DELETE** /v1/accounts/:account_id/destinations/:destination_id_
 
-Deletes an output.
+Deletes an destination.
 
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```output_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
 
 Providers
 ------
@@ -728,11 +728,11 @@ Removes a consumer from a particular application.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```consumer_id``` -  (example: my_customer_id)
-###List Consumer outputs
+###List Consumer destinations
 
-_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/outputs_
+_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations_
 
-Returns all the outputs for the consumer of a given application.
+Returns all the destinations for the consumer of a given application.
 
 #### URI Path Parameters
 
@@ -741,14 +741,14 @@ Returns all the outputs for the consumer of a given application.
 * ```consumer_id``` -  (example: my_customer_id)
 #### Query Parameters
 
-* ```bucket_key``` (required) - The bucket key the output shoud be created for. (example: default)
-* ```output_key``` - Name for the bucket.
+* ```bucket_key``` (required) - The bucket key the destination shoud be created for. (example: default)
+* ```destination_key``` - Name for the bucket.
 
-###Create Consumer output
+###Create Consumer destination
 
-_**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/outputs_
+_**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations_
 
-Adds an output for the consumer of a given application.
+Adds an destination for the consumer of a given application.
 
 #### URI Path Parameters
 
@@ -757,9 +757,9 @@ Adds an output for the consumer of a given application.
 * ```consumer_id``` -  (example: my_customer_id)
 #### POST Parameters
 
-* ```application_version_id``` (required) - The version of the application the output should respond to. (example: Webhooks)
+* ```application_version_id``` (required) - The version of the application the destination should respond to. (example: Webhooks)
 * ```name``` (required) - Name for the input. (example: My Bucket)
-* ```bucket_key``` (required) - The bucket key the output shoud be created for. (example: default)
+* ```bucket_key``` (required) - The bucket key the destination shoud be created for. (example: default)
 * ```endpoint_url``` (required) - The status of the bucket, defaults to active.
 * ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
 * ```status``` - The status of the bucket, defaults to active.
@@ -787,21 +787,21 @@ Adds an output for the consumer of a given application.
 }
 ```
 
-###Update Consumer output
+###Update Consumer destination
 
-_**PUT** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/outputs/:output_id_
+_**PUT** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
 
-Updates an output for the consumer of a given application.
+Updates an destination for the consumer of a given application.
 
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```consumer_id``` -  (example: my_customer_id)
-* ```output_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
 #### POST Parameters
 
-* ```application_version_id``` (required) - The version of the application the output should respond to. (example: Webhooks)
+* ```application_version_id``` (required) - The version of the application the destination should respond to. (example: Webhooks)
 * ```name``` (required) - Name for the input. (example: My Bucket)
 * ```endpoint_url``` (required) - The status of the bucket, defaults to active.
 * ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
@@ -829,18 +829,30 @@ Updates an output for the consumer of a given application.
 }
 ```
 
-###Delete Consumer output
+###Get Consumer destination
 
-_**DELETE** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/outputs/:output_id_
+_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
 
-Deletes an output for the consumer of a given application.
+Returns the details of an destination for the consumer of a given application.
 
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```consumer_id``` -  (example: my_customer_id)
-* ```output_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+###Delete Consumer destination
+
+_**DELETE** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
+
+Deletes an destination for the consumer of a given application.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+* ```consumer_id``` -  (example: my_customer_id)
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
 ###List Consumer Buckets
 
 _**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/buckets_
@@ -879,7 +891,7 @@ Checks to see if the consumer is subscribed to a given event or set of events.  
 
 * ```bucket_key``` (required) - The bucket key the subscription should be checked for. (example: development)
 * ```event_name``` (required) - The name of the event to check.
-* ```include_output_detail``` - If the details of each subscribed output should be returned.
+* ```include_destination_detail``` - If the details of each subscribed destination should be returned.
 
 ```js
 {
@@ -902,7 +914,7 @@ Returns a log of all messages for a given consumer.
 
 * ```start_date``` - The start date for the data.  This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
 * ```end_date``` - The end date for the data.  This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
-* ```output_id``` - 
+* ```destination_id``` - 
 * ```http_status``` - 
 
 ###Create Client Token
@@ -970,8 +982,9 @@ Returns a general overview.
 * ```start_date``` (required) - The start date for the data.
 * ```end_date``` (required) - The end date for the data.
 * ```precision``` (required) - The end date for the data.
+* ```application_id``` - The application id the data should be filtered with.
 * ```bucket_id``` - The end date for the data.
-* ```output_id``` - The end date for the data.
+* ```destination_id``` - The end date for the data.
 * ```input_id``` - The end date for the data.
 * ```include_sub_accounts``` - If sub account data should be included.
 
@@ -989,7 +1002,7 @@ Returns a general summary report.
 * ```start_date``` - The start date for the data.
 * ```end_date``` - The end date for the data.
 * ```bucket_id``` - The end date for the data.
-* ```output_id``` - The end date for the data.
+* ```destination_id``` - The end date for the data.
 * ```input_id``` - The end date for the data.
 
 ###Request Log
@@ -1009,6 +1022,46 @@ Returns a log of all messages.
 * ```bucket_id``` - 
 * ```http_status``` - 
 
+
+Messages
+------
+
+Some intro into the API.
+
+###Get Incoming Message
+
+_**GET** /v1/accounts/:account_id/incoming/:incoming_message_id_
+
+Returns the details regarding an incoming message.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```incoming_message_id``` -  (example: IMe987d754d82a419e8c54c2185ed0ef29)
+#### Query Parameters
+
+* ```include_outgoing_messages``` - If the outgoing messages should be included as well.
+
+###Get Outgoing Message
+
+_**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id_
+
+Returns the details regarding an outgoing message, including all attempts
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
+###Get Outgoing Message Status Details
+
+_**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id/status_
+
+Returns the basic information regarding the status of the outgoing request.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
 
 Users
 ------
@@ -1053,6 +1106,16 @@ Allows a user to change their password.  Either the existing password or change 
 }
 ```
 
+###Lookup API Token
+
+_**GET** /v1/accounts/:account_id/users/:user_id/api-token_
+
+Provides a user a way to lookup their own API token.  This is used when using ST or client-bearer-token authentication so the user can get a longer lasting API token.  This operation can only be carried out for the currently authenticated user.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```user_id``` -  (example: USe987d754d82a419e8c54c2185ed0ef29)
 ###Reset Password
 
 _**POST** /v1/reset_password_
