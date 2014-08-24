@@ -6,27 +6,26 @@ The Webhooks API is organized around REST and is designed to have predictable, r
 Requests
 ------
 
-API Base URL: https://api.webhooks.io
-
-Content TBD...
+All API requests must be send over SSL.  The base URL is https://api.webhooks.io which will hit our US East data center.  In the near future, we are looking to add region based endpoints as well.
 
 Responses
 ------
 
+Each API request will include a JSON response.
+
 Authentication
 ------
 
-Content TBD...
+You authenticate to the Webhooks API by providing one of your API keys in the request. You can manage your API keys from your account. You can have multiple API keys active at one time. Your API keys carry many privileges, so be sure to keep them secret!
 
-Pagination
-------
+Authentication to the API occurs via HTTP Basic Auth. Provide your API key as the basic auth username. You do not need to provide a password.
 
-Content TBD...
+All API requests must be made over HTTPS. Calls made over plain HTTP will fail. You must authenticate for all requests.
 
 Versioning
 ------
 
-Content TBD...
+When we make backwards-incompatible changes to the API, we release new versions. The current version is v1.  The version should be specified in the URL following the domain name, eg: https://api.webhooks.io/v1/
 
 Errors
 ------
