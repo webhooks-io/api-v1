@@ -646,6 +646,104 @@ Deletes an destination.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
 
+Recipes
+------
+
+Some intro into the API.
+
+###Create Recipe
+
+_**POST** /v1/accounts/:account_id/recipes_
+
+Adds a Recipe to an account
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+#### POST Parameters
+
+* ```name``` (required) - Name for the recipe. (example: My Recipe)
+* ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
+* ```type``` (required) - The type of recipe, either input or desination. (example: input)
+* ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
+* ```recipe_draft``` (required) - During development, this is the receipe that is saved. (example: my-bucket)
+
+```js
+{
+	name: 'My Recipe'
+	type: 'input'
+	notes: 'This is used to transform the payload to work with Slack webhooks.'
+	recipe_draft: 'my-bucket'
+}
+```
+
+###Update Recipe
+
+_**PUT** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Updates a Recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+#### POST Parameters
+
+* ```name``` (required) - Name for the recipe. (example: My Recipe)
+* ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
+* ```type``` (required) - The type of recipe, either input or desination. (example: input)
+* ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
+* ```recipe_draft``` (required) - During development, this is the receipe that is saved. (example: my-bucket)
+
+```js
+{
+	name: 'My Recipe'
+	type: 'input'
+	notes: 'This is used to transform the payload to work with Slack webhooks.'
+	recipe_draft: 'my-bucket'
+}
+```
+
+###Publish Recipe
+
+_**POST** /v1/accounts/:account_id/recipes/:recipe_id/publish_
+
+Publishes the draft recipe so it can be used as the production recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+###Get Recipe
+
+_**GET** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Returns the details for a specfic recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+###List Recipe
+
+_**GET** /v1/accounts/:account_id/recipes_
+
+Returns a collection of recipes for an account.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+###Delete Recipe
+
+_**DELETE** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Deletes a Recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+
 Providers
 ------
 
