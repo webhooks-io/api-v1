@@ -666,14 +666,14 @@ Adds a Recipe to an account
 * ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
 * ```type``` (required) - The type of recipe, either input or desination. (example: input)
 * ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
-* ```recipe_draft``` (required) - During development, this is the receipe that is saved. (example: my-bucket)
+* ```recipe_draft``` (required) - During development, this is the receipe that is saved. (example: return { x: 1, x: 2 };)
 
 ```js
 {
 	name: 'My Recipe'
 	type: 'input'
 	notes: 'This is used to transform the payload to work with Slack webhooks.'
-	recipe_draft: 'my-bucket'
+	recipe_draft: 'return { x: 1, x: 2 };'
 }
 ```
 
@@ -693,14 +693,14 @@ Updates a Recipe.
 * ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
 * ```type``` (required) - The type of recipe, either input or desination. (example: input)
 * ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
-* ```recipe_draft``` (required) - During development, this is the receipe that is saved. (example: my-bucket)
+* ```recipe_draft``` (required) - During development, this is the receipe that is saved. (example: return { x: 1, x: 2 };)
 
 ```js
 {
 	name: 'My Recipe'
 	type: 'input'
 	notes: 'This is used to transform the payload to work with Slack webhooks.'
-	recipe_draft: 'my-bucket'
+	recipe_draft: 'return { x: 1, x: 2 };'
 }
 ```
 
