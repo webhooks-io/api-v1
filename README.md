@@ -786,23 +786,24 @@ Deletes a Recipe.
 
 _**PUT** /v1/accounts/:account_id/recipes/test_
 
-Provides the ability to test a recipe to ensure the output is correct.
+Provides the ability to test a recipe to ensure the output is correct.  The recipe MUST be wrapped in 'function wh(){}' and return exit([data]) as shown in the sample below.
 
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 #### POST Parameters
 
-* ```sample_code``` - Sample code to be used during the testing of this recipe.
-* ```type``` (required) - The type of recipe, either input or desination. (example: input)
-* ```recipe``` (required) - The receipe to be tested. (example: return { x: 1, x: 2 };)
-* ```event_type``` - The event type. (example: return { x: 1, x: 2 };)
+* ```sample_code``` - Sample code to be used during the testing of this recipe. (example: {"name": "Sample Code", "details": "This is a sample test of the recipe processor"})
+* ```type``` (required) - The type of recipe, either input or destination. (example: input)
+* ```recipe``` (required) - The recipe to be tested. (example: function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); })
+* ```event_type``` - The event type. (example: invoice.create)
 
 ```js
 {
+	sample_code: '{"name": "Sample Code", "details": "This is a sample test of the recipe processor"}'
 	type: 'input'
-	recipe: 'return { x: 1, x: 2 };'
-	event_type: 'return { x: 1, x: 2 };'
+	recipe: 'function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); }'
+	event_type: 'invoice.create'
 }
 ```
 
