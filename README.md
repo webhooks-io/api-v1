@@ -743,6 +743,30 @@ Deletes a Recipe.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+###Test Recipe
+
+_**PUT** /v1/accounts/:account_id/recipes/test_
+
+Provides the ability to test a recipe to ensure the output is correct.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+#### POST Parameters
+
+* ```sample_code``` - Sample code to be used during the testing of this recipe.
+* ```type``` (required) - The type of recipe, either input or desination. (example: input)
+* ```recipe``` (required) - The receipe to be tested. (example: return { x: 1, x: 2 };)
+* ```event_type``` - The event type. (example: return { x: 1, x: 2 };)
+
+```js
+{
+	type: 'input'
+	recipe: 'return { x: 1, x: 2 };'
+	event_type: 'return { x: 1, x: 2 };'
+}
+```
+
 
 Providers
 ------
