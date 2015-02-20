@@ -863,6 +863,7 @@ Returns all the buckets for the consumer of a given application.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```consumer_id``` -  (example: my_customer_id)
+
 ###Send webhook to consumer
 
 _**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/send/:bucket_key_
@@ -875,6 +876,7 @@ Sends a webhook to a particular consumer of an application for the given bucket_
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```consumer_id``` -  (example: my_customer_id)
 * ```bucket_key``` -  (example: development)
+
 ###Check consumer subscription
 
 _**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/check_
