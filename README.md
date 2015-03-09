@@ -1116,7 +1116,7 @@ Some intro into the API.
 
 ###Import SSL Certificate
 
-_**POST** /v1/accounts/:account_id/certificates/import_
+_**POST** /v1/accounts/:account_id/certificates_
 
 Imports an SSL cert into your account keystore so it can be used during webhook reqeusts.  This can be useful for self-signed SSL certificates.
 
