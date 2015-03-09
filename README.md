@@ -1114,23 +1114,23 @@ SSL Certificates
 Some intro into the API.
 
 
-###Import SSL Cert
+###Import SSL Certificate
 
 _**POST** /v1/accounts/:account_id/certificates/import_
 
-Imports an SSL cert into your account keystore.
+Imports an SSL cert into your account keystore so it can be used during webhook reqeusts.  This can be useful for self-signed SSL certificates.
 
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 #### POST Parameters
 
-* ```domain``` (required) - The domain for the certificate that you wish to import (example: google.com)
+* ```domain``` (required) - The domain for the certificate that you wish to import (example: api.webhooks.io)
 * ```port``` (required) - The port to use. (defaults to 443) (example: 443)
 
 ```js
 {
-	domain: 'google.com'
+	domain: 'api.webhooks.io'
 	port: '443'
 }
 ```
