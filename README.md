@@ -43,6 +43,7 @@ Accounts
 
 When you sign up with Webhooks.io you will be provided one account - your Master Account.  However, you have the ability to create more accounts called sub-accounts.  These sub-accounts are useful for segmenting your clients if you are using the platform to deliver webhooks for your application.
 
+
 ###Account Registration
 
 _**POST** /v1/register_
@@ -55,9 +56,9 @@ Creates a new account.  This is the same call that is used when a user registers
 * ```first_name``` (required) - First name of the primary user on the account. (example: Bob)
 * ```last_name``` (required) - Last name of the primary user on the account. (example: Smith)
 * ```email_address``` (required) - The primary email address for the user on the account. (example: bob.smith@example.com)
-* ```password``` (required) - The password for the user on the account
-* ```password_confirm``` (required) - The confirmation entry for the password. (example: Bob)
-* ```plan_id``` (required) - The plan id selected for the account.  Use /plans resource for a list of all plans.
+* ```password``` (required) - The password for the user on the account (example: mypassword)
+* ```password_confirm``` (required) - The confirmation entry for the password. (example: mypassword)
+* ```plan_id``` (required) - The plan id selected for the account.  Use /plans resource for a list of all plans. (example: free)
 * ```card_number``` - The credit card number to be used for billing.
 * ```card_month``` - The expiration month for the credit card.
 * ```card_year``` - The expiration year for the credit card.
@@ -65,7 +66,7 @@ Creates a new account.  This is the same call that is used when a user registers
 * ```coupon``` - A coupon code to be used.
 * ```referrer``` - The location the user came from.
 * ```email_verification_callback_url``` - The URL for where the user should be directed to upon verification of the email address.  A query param of ?status=[success,failure] will be appended to this URL.
-* ```invite_code``` (required) - The invite code used to create account.
+* ```invite_code``` - The invite code used to create account.
 
 ```js
 {
@@ -73,9 +74,12 @@ Creates a new account.  This is the same call that is used when a user registers
 	first_name: 'Bob'
 	last_name: 'Smith'
 	email_address: 'bob.smith@example.com'
-	password_confirm: 'Bob'
+	password: 'mypassword'
+	password_confirm: 'mypassword'
+	plan_id: 'free'
 }
 ```
+
 
 ###Create Sub Account
 
@@ -98,6 +102,7 @@ Creates a sub account.
 }
 ```
 
+
 ###List Sub Accounts
 
 _**GET** /v1/accounts/:account_id/subaccounts_
@@ -111,6 +116,7 @@ Lists all sub accounts user an account.
 
 * ```account_key``` - Identifier from another system. (example: acct123456789)
 
+
 ###List Accounts
 
 _**GET** /v1/accounts_
@@ -121,6 +127,7 @@ Lists all accounts.
 
 * ```account_key``` - Identifier from another system. (example: acct123456789)
 
+
 ###Get Account
 
 _**GET** /v1/accounts/:account_id_
@@ -130,6 +137,7 @@ Returns the details of a specfic account.
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
 ###Update Account
 
 _**PUT** /v1/accounts/:account_id_
@@ -151,6 +159,7 @@ Updates the details on an account.
 }
 ```
 
+
 ###Delete Account
 
 _**DELETE** /v1/accounts/:account_id_
@@ -165,6 +174,7 @@ Applications
 ------
 
 Some intro into the API.
+
 
 ###Create Application
 
@@ -184,7 +194,7 @@ Adds an application to an account
 * ```homepage_url``` (required) - The url of the application homepage. (example: http://mywebsite.com)
 * ```api_url``` (required) - The url to the API documention for the application. (example: http://api.mywebsite.com)
 * ```logo_url``` (required) - The url to the logo. (example: http://mywebsite.com/webhooksio/logo.jpg)
-* ```active``` (required) - If the application should be active (viewable) or not.
+* ```active``` (required) - If the application should be active (viewable) or not. (example: true)
 
 ```js
 {
@@ -195,8 +205,10 @@ Adds an application to an account
 	homepage_url: 'http://mywebsite.com'
 	api_url: 'http://api.mywebsite.com'
 	logo_url: 'http://mywebsite.com/webhooksio/logo.jpg'
+	active: 'true'
 }
 ```
+
 
 ###Update Application
 
@@ -231,6 +243,7 @@ Updates an Application.
 }
 ```
 
+
 ###Get Application
 
 _**GET** /v1/accounts/:account_id/applications/:application_id_
@@ -241,6 +254,7 @@ Returns the details for a specfic application.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+
 ###List Applications
 
 _**GET** /v1/accounts/:account_id/applications_
@@ -250,6 +264,7 @@ Returns a collection of applications for an account.
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
 ###Delete Application
 
 _**DELETE** /v1/accounts/:account_id/applications/:application_id_
@@ -260,6 +275,7 @@ Deletes an application.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+
 ###Create Application Version
 
 _**POST** /v1/accounts/:account_id/applications/:application_id/versions_
@@ -273,16 +289,21 @@ Adds a version to an application.
 #### POST Parameters
 
 * ```key``` (required) - The key/id for this version. (example: 1.1)
-* ```release_date``` (required) - The date this version was released.
-* ```version_json``` (required) - The complete JSON definition for the version.
-* ```examples_json``` (required) - The complete JSON definition for the version examples/recipies
-* ```active``` (required) - If the version should be active (viewable) or not.
+* ```release_date``` (required) - The date this version was released. (example: 2015-01-01)
+* ```version_json``` (required) - The complete JSON definition for the version. (example: {})
+* ```examples_json``` (required) - The complete JSON definition for the version examples/recipes (example: {})
+* ```active``` (required) - If the version should be active (viewable) or not. (example: true)
 
 ```js
 {
 	key: '1.1'
+	release_date: '2015-01-01'
+	version_json: '{}'
+	examples_json: '{}'
+	active: 'true'
 }
 ```
+
 
 ###Update Application Version
 
@@ -309,6 +330,7 @@ Updates an application version.
 }
 ```
 
+
 ###Get Application Version
 
 _**GET** /v1/accounts/:account_id/applications/:application_id/versions/:application_version_id_
@@ -320,6 +342,7 @@ Returns the details for a specfic application version.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```application_version_id``` -  (example: AVe987d754d82a419e8c54c2185ed0ef29)
+
 ###List Application Versions
 
 _**GET** /v1/accounts/:account_id/applications/:application_id/versions_
@@ -330,6 +353,7 @@ Returns a collection of versions for an application.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+
 ###Delete Application Version
 
 _**DELETE** /v1/accounts/:account_id/applications/:application_id/versions/:application_version_id_
@@ -346,6 +370,7 @@ Buckets
 ------
 
 Some intro into the API.
+
 
 ###Create Bucket
 
@@ -367,6 +392,7 @@ Adds a bucket to an account
 	key: 'my-bucket'
 }
 ```
+
 
 ###Update Bucket
 
@@ -390,6 +416,7 @@ Updates a bucket.
 }
 ```
 
+
 ###Get Bucket
 
 _**GET** /v1/accounts/:account_id/buckets/:bucket_id_
@@ -400,6 +427,7 @@ Returns the details for a specfic bucket.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```bucket_id``` -  (example: BUe987d754d82a419e8c54c2185ed0ef29)
+
 ###List Buckets
 
 _**GET** /v1/accounts/:account_id/buckets_
@@ -409,6 +437,7 @@ Returns a collection of buckets for an account.
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
 ###Delete Bucket
 
 _**DELETE** /v1/accounts/:account_id/buckets/:bucket_id_
@@ -424,6 +453,7 @@ Inputs
 ------
 
 Some intro into the API.
+
 
 ###Create Input
 
@@ -448,6 +478,7 @@ Adds an input to an account
 * ```response_content_type``` - The content type that should be returned upon hook receipt, this should mirror the data in the response_content variable. (example: application/json)
 * ```authentication_failures``` - How to handle authentication failures.
 * ```authentication_type``` - The type of authentication to apply to incoming requests.
+* ```recipe_id``` - If a recipe should be applied to messages coming through this input it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
 
 ```js
 {
@@ -457,8 +488,10 @@ Adds an input to an account
 	event_path: 'msg.event'
 	event_filters: 'account.created,message.sent'
 	response_content_type: 'application/json'
+	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
 }
 ```
+
 
 ###Update Input
 
@@ -483,6 +516,7 @@ Updates the details for an input.
 * ```response_content_type``` - The content type that should be returned upon hook receipt, this should mirror the data in the response_content variable. (example: application/json)
 * ```authentication_failures``` - How to handle authentication failures.
 * ```authentication_type``` - The type of authentication to apply to incoming requests.
+* ```recipe_id``` - If a recipe should be applied to messages coming through this input it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
 
 ```js
 {
@@ -491,8 +525,10 @@ Updates the details for an input.
 	event_path: 'msg.event'
 	event_filters: 'account.created,message.sent'
 	response_content_type: 'application/json'
+	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
 }
 ```
+
 
 ###Get Input
 
@@ -504,6 +540,7 @@ Returns the details for a specfic input.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
+
 ###List Inputs
 
 _**GET** /v1/accounts/:account_id/buckets/:bucket_id/inputs_
@@ -518,6 +555,7 @@ Returns a collection of inputs for an account.
 
 * ```key``` - Name for the bucket.
 * ```event_filter``` - The event that should be filtered on.
+
 
 ###Delete Input
 
@@ -535,6 +573,7 @@ Destinations
 
 Some intro into the API.
 
+
 ###Create Destination
 
 _**POST** /v1/accounts/:account_id/inputs/:input_id/destinations_
@@ -548,7 +587,7 @@ Adds an destination for an input.
 #### POST Parameters
 
 * ```name``` (required) - Name for the input. (example: My Final Destination)
-* ```endpoint_url``` (required) - The URL the messages should be sent to.
+* ```endpoint_url``` (required) - The URL the messages should be sent to. (example: http://mydomain.com/webhook-endpoint)
 * ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
 * ```status``` - The status of the bucket, defaults to active.
 * ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
@@ -561,17 +600,22 @@ Adds an destination for an input.
 * ```headers_to_include``` - A comma delimited list of custom headers to include.
 * ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
 * ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
+* ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
+* ```cert_ca``` - The CA of a cert to be used during the http request.
 
 ```js
 {
 	name: 'My Final Destination'
+	endpoint_url: 'http://mydomain.com/webhook-endpoint'
 	delivery_order: 'random'
 	message_method: 'GET'
 	event_filters: 'account.created,message.sent'
 	header_prefix: 'Webhooks'
 	alert_on_failure: 'bob@mail.com,john@email.com'
+	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
 }
 ```
+
 
 ###Update Destination
 
@@ -599,6 +643,8 @@ Updates the details of an destination.
 * ```headers_to_include``` - A comma delimited list of custom headers to include.
 * ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
 * ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
+* ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
+* ```cert_ca``` - The CA of a cert to be used during the http request.
 
 ```js
 {
@@ -608,8 +654,10 @@ Updates the details of an destination.
 	event_filters: 'account.created,message.sent'
 	header_prefix: 'Webhooks'
 	alert_on_failure: 'bob@mail.com,john@email.com'
+	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
 }
 ```
+
 
 ###Get Destination
 
@@ -621,6 +669,7 @@ Returns the details for a specfic destination.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+
 ###List Destination
 
 _**GET** /v1/accounts/:account_id/inputs/:input_id/destinations_
@@ -635,6 +684,7 @@ Returns a collection of destinations.
 
 * ```destination_key``` - Name for the bucket.
 
+
 ###Delete Destination
 
 _**DELETE** /v1/accounts/:account_id/destinations/:destination_id_
@@ -646,10 +696,147 @@ Deletes an destination.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
 
+Recipes
+------
+
+Some intro into the API.
+
+
+###Create Recipe
+
+_**POST** /v1/accounts/:account_id/recipes_
+
+Adds a Recipe to an account
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+#### POST Parameters
+
+* ```name``` (required) - Name for the recipe. (example: My Recipe)
+* ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
+* ```type``` (required) - The type of recipe, either input or destination. (example: input)
+* ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
+* ```recipe_draft``` (required) - During development, this is the recipe that is saved. (example: return { x: 1, x: 2 };)
+* ```run_on_each_attempt``` - If the recipe should be run each time it is attempted. (example: true)
+
+```js
+{
+	name: 'My Recipe'
+	type: 'input'
+	notes: 'This is used to transform the payload to work with Slack webhooks.'
+	recipe_draft: 'return { x: 1, x: 2 };'
+	run_on_each_attempt: 'true'
+}
+```
+
+
+###Update Recipe
+
+_**PUT** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Updates a Recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+#### POST Parameters
+
+* ```name``` (required) - Name for the recipe. (example: My Recipe)
+* ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
+* ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
+* ```recipe_draft``` (required) - During development, this is the recipe that is saved. (example: return { x: 1, x: 2 };)
+* ```run_on_each_attempt``` - If the recipe should be run each time it is attempted. (example: true)
+
+```js
+{
+	name: 'My Recipe'
+	notes: 'This is used to transform the payload to work with Slack webhooks.'
+	recipe_draft: 'return { x: 1, x: 2 };'
+	run_on_each_attempt: 'true'
+}
+```
+
+
+###Publish Recipe
+
+_**POST** /v1/accounts/:account_id/recipes/:recipe_id/publish_
+
+Publishes the draft recipe so it can be used as the production recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+###Get Recipe
+
+_**GET** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Returns the details for a specfic recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+###List Recipe
+
+_**GET** /v1/accounts/:account_id/recipes_
+
+Returns a collection of recipes for an account.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+#### Query Parameters
+
+* ```type``` - The type of recipe, either input or destination. (example: input)
+
+
+###Delete Recipe
+
+_**DELETE** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Deletes a Recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+###Test Recipe
+
+_**PUT** /v1/accounts/:account_id/recipes/test_
+
+Provides the ability to test a recipe to ensure the output is correct.  The recipe MUST be wrapped in 'function wh(){}' and return exit([data]) as shown in the sample below.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+#### POST Parameters
+
+* ```sample_code``` - Sample code to be used during the testing of this recipe. (example: {"name": "Sample Code", "details": "This is a sample test of the recipe processor"})
+* ```type``` (required) - The type of recipe, either input or destination. (example: input)
+* ```recipe``` (required) - The recipe to be tested. (example: function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); })
+* ```event_type``` - The event type. (example: invoice.create)
+
+```js
+{
+	sample_code: '{"name": "Sample Code", "details": "This is a sample test of the recipe processor"}'
+	type: 'input'
+	recipe: 'function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); }'
+	event_type: 'invoice.create'
+}
+```
+
+
 Providers
 ------
 
 Some intro into the API.
+
 
 ###Create Consumer
 
@@ -663,16 +850,18 @@ Creates a consumer for an application
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 #### POST Parameters
 
-* ```consumer_id``` (required) - The id for the consumer of the application.  This id should be the unique id from the application provider that identifies this customer/consumer of the application.
+* ```consumer_id``` (required) - The id for the consumer of the application.  This id should be the unique id from the application provider that identifies this customer/consumer of the application. (example: my-internal-customer-id)
 * ```bucket_key``` (required) - The bucket key that identifies the container for this consumer, if this does not exist it will be created. Default is default. (example: default)
 * ```name``` (required) - The name of the consumer.  This could be the account name within the provider application for example. (example: ACME Corp, Inc.)
 
 ```js
 {
+	consumer_id: 'my-internal-customer-id'
 	bucket_key: 'default'
 	name: 'ACME Corp, Inc.'
 }
 ```
+
 
 ###Get Consumers
 
@@ -684,6 +873,7 @@ Returns a list of all the consumers for a particular application.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+
 ###Update Consumer
 
 _**PUT** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id_
@@ -705,6 +895,7 @@ Updates the details for a particular consumer.
 }
 ```
 
+
 ###Get Consumer
 
 _**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id_
@@ -716,147 +907,12 @@ Get the details for a particular consumer.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```consumer_id``` -  (example: my_customer_id)
+
 ###Delete Consumer
 
 _**DELETE** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id_
 
 Removes a consumer from a particular application.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-###List Consumer destinations
-
-_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations_
-
-Returns all the destinations for the consumer of a given application.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-#### Query Parameters
-
-* ```bucket_key``` (required) - The bucket key the destination shoud be created for. (example: default)
-* ```destination_key``` - Name for the bucket.
-
-###Create Consumer destination
-
-_**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations_
-
-Adds an destination for the consumer of a given application.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-#### POST Parameters
-
-* ```application_version_id``` (required) - The version of the application the destination should respond to. (example: Webhooks)
-* ```name``` (required) - Name for the input. (example: My Bucket)
-* ```bucket_key``` (required) - The bucket key the destination shoud be created for. (example: default)
-* ```endpoint_url``` (required) - The status of the bucket, defaults to active.
-* ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
-* ```status``` - The status of the bucket, defaults to active.
-* ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
-* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
-* ```authentication_type``` - The type of authentication to apply to incoming requests.
-* ```retry_policy_id``` - The retry algorithm that will be used for failed attempts.
-* ```retry_count``` - The number of times the hook will be retried.
-* ```retry_interval``` - The interval for which the retries will be set.
-* ```verify_ssl``` - Ensure the SSL certificate is trusted and valid.  If false, this will bypass this protection.
-* ```headers_to_include``` - A comma delimited list of custom headers to include.
-* ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
-* ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
-
-```js
-{
-	application_version_id: 'Webhooks'
-	name: 'My Bucket'
-	bucket_key: 'default'
-	delivery_order: 'random'
-	message_method: 'GET'
-	event_filters: 'account.created,message.sent'
-	header_prefix: 'Webhooks'
-	alert_on_failure: 'bob@mail.com,john@email.com'
-}
-```
-
-###Update Consumer destination
-
-_**PUT** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
-
-Updates an destination for the consumer of a given application.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
-#### POST Parameters
-
-* ```application_version_id``` (required) - The version of the application the destination should respond to. (example: Webhooks)
-* ```name``` (required) - Name for the input. (example: My Bucket)
-* ```endpoint_url``` (required) - The status of the bucket, defaults to active.
-* ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
-* ```status``` - The status of the bucket, defaults to active.
-* ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
-* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
-* ```authentication_type``` - The type of authentication to apply to incoming requests.
-* ```retry_policy_id``` - The retry algorithm that will be used for failed attempts.
-* ```retry_count``` - The number of times the hook will be retried.
-* ```retry_interval``` - The interval for which the retries will be set.
-* ```verify_ssl``` - Ensure the SSL certificate is trusted and valid.  If false, this will bypass this protection.
-* ```headers_to_include``` - A comma delimited list of custom headers to include.
-* ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
-* ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
-
-```js
-{
-	application_version_id: 'Webhooks'
-	name: 'My Bucket'
-	delivery_order: 'random'
-	message_method: 'GET'
-	event_filters: 'account.created,message.sent'
-	header_prefix: 'Webhooks'
-	alert_on_failure: 'bob@mail.com,john@email.com'
-}
-```
-
-###Get Consumer destination
-
-_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
-
-Returns the details of an destination for the consumer of a given application.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
-###Delete Consumer destination
-
-_**DELETE** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
-
-Deletes an destination for the consumer of a given application.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
-###List Consumer Buckets
-
-_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/buckets_
-
-Returns all the buckets for the consumer of a given application.
 
 #### URI Path Parameters
 
@@ -900,23 +956,6 @@ Checks to see if the consumer is subscribed to a given event or set of events.  
 }
 ```
 
-###Consumer Request Log
-
-_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/log_
-
-Returns a log of all messages for a given consumer.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-#### Query Parameters
-
-* ```start_date``` - The start date for the data.  This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
-* ```end_date``` - The end date for the data.  This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
-* ```destination_id``` - 
-* ```http_status``` - 
 
 ###Create Client Token
 
@@ -939,6 +978,7 @@ Generates a client token to be used with the embedded views.
 	bucket_key: 'development'
 }
 ```
+
 
 ###Get Embedded View HTML
 
@@ -969,6 +1009,7 @@ Reporting
 
 Some intro into the API.
 
+
 ###Overview Report
 
 _**GET** /v1/accounts/:account_id/stats/overview_
@@ -989,6 +1030,7 @@ Returns a general overview.
 * ```input_id``` - The end date for the data.
 * ```include_sub_accounts``` - If sub account data should be included.
 
+
 ###Summary Report
 
 _**GET** /v1/accounts/:account_id/stats/summary_
@@ -1005,6 +1047,7 @@ Returns a general summary report.
 * ```bucket_id``` - The end date for the data.
 * ```destination_id``` - The end date for the data.
 * ```input_id``` - The end date for the data.
+
 
 ###Request Log
 
@@ -1029,6 +1072,7 @@ Messages
 
 Some intro into the API.
 
+
 ###Get Incoming Message
 
 _**GET** /v1/accounts/:account_id/incoming/:incoming_message_id_
@@ -1043,6 +1087,7 @@ Returns the details regarding an incoming message.
 
 * ```include_outgoing_messages``` - If the outgoing messages should be included as well.
 
+
 ###Get Outgoing Message
 
 _**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id_
@@ -1053,6 +1098,7 @@ Returns the details regarding an outgoing message, including all attempts
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
+
 ###Get Outgoing Message Status Details
 
 _**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id/status_
@@ -1069,6 +1115,7 @@ Users
 
 Some intro into the API.
 
+
 ###Login
 
 _**PUT** /v1/authenticate_
@@ -1084,6 +1131,7 @@ Authenticates the users login credentials
 {
 }
 ```
+
 
 ###Change Password
 
@@ -1107,6 +1155,7 @@ Allows a user to change their password.  Either the existing password or change 
 }
 ```
 
+
 ###Lookup API Token
 
 _**GET** /v1/accounts/:account_id/users/:user_id/api-token_
@@ -1117,6 +1166,7 @@ Provides a user a way to lookup their own API token.  This is used when using ST
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```user_id``` -  (example: USe987d754d82a419e8c54c2185ed0ef29)
+
 ###Reset Password
 
 _**POST** /v1/reset_password_
@@ -1133,6 +1183,7 @@ Allows the user to request their password to be emailed to them.  Really this pr
 }
 ```
 
+
 ###Lookup Password Change Key
 
 _**GET** /v1/password_change_key/:password_change_key_
@@ -1142,6 +1193,7 @@ Looks up the meta data for the password change key.
 #### URI Path Parameters
 
 * ```password_change_key``` -  (example: CKe987d754d82a419e8c54c2185ed0ef29)
+
 ###Create User
 
 _**POST** /v1/accounts/:account_id/users_
@@ -1156,18 +1208,23 @@ Adds a user to an account.
 * ```first_name``` (required) - First name of the primary user on the account. (example: Bob)
 * ```last_name``` (required) - Last name of the primary user on the account. (example: Smith)
 * ```email_address``` (required) - The primary email address for the user on the account. (example: bob.smith@example.com)
-* ```password``` (required) - The password for the user on the account
-* ```permission_level``` (required) - The permission level for the user account.
-* ```timezone``` (required) - The timezone the user is located in.  Default is Etc/GTM
-* ```notify``` (required) - If the user should be notified that an account has been created for them.
+* ```password``` (required) - The password for the user on the account (example: mypassword)
+* ```permission_level``` (required) - The permission level for the user account. (example: mypassword)
+* ```timezone``` (required) - The timezone the user is located in.  Default is Etc/GTM (example: Etc/GTM)
+* ```notify``` (required) - If the user should be notified that an account has been created for them. (example: true)
 
 ```js
 {
 	first_name: 'Bob'
 	last_name: 'Smith'
 	email_address: 'bob.smith@example.com'
+	password: 'mypassword'
+	permission_level: 'mypassword'
+	timezone: 'Etc/GTM'
+	notify: 'true'
 }
 ```
+
 
 ###Update User
 
@@ -1196,6 +1253,7 @@ Updates a users account information.
 }
 ```
 
+
 ###Get User
 
 _**GET** /v1/accounts/:account_id/users/:user_id_
@@ -1206,6 +1264,7 @@ Returns the details for a specfic user.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```user_id``` -  (example: USe987d754d82a419e8c54c2185ed0ef29)
+
 ###List Users
 
 _**GET** /v1/accounts/:account_id/users_
@@ -1216,6 +1275,7 @@ Returns a collection of users.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```user_id``` -  (example: USe987d754d82a419e8c54c2185ed0ef29)
+
 ###Delete User
 
 _**DELETE** /v1/accounts/:account_id/users/:user_id_
@@ -1226,6 +1286,7 @@ Deletes a user.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```user_id``` -  (example: USe987d754d82a419e8c54c2185ed0ef29)
+
 ###Verify Email Address
 
 _**GET** /v1/verify/:email_verification_key_
@@ -1235,6 +1296,7 @@ Handles validating the email address once the user has clicked the validation li
 #### URI Path Parameters
 
 * ```email_verification_key``` -  (example: EV4d3dc5927f304df08ad36c5a3a893c52)
+
 ###Resend Verification Email
 
 _**GET** /v1/accounts/:account_id/users/:user_id/resend_verification_
@@ -1251,17 +1313,20 @@ Utils
 
 Some intro into the API.
 
+
 ###Health Check
 
 _**GET** /v1/health_
 
 System health check
 
+
 ###Gets Plans
 
 _**GET** /v1/plans_
 
 Returns all the possible public plans.
+
 
 ###Get Plan
 
@@ -1272,17 +1337,20 @@ Returns the details of a specific plan.
 #### URI Path Parameters
 
 * ```plan_id``` -  (example: starter)
+
 ###Get Timezones
 
 _**GET** /v1/util/timezones_
 
 Returns all valid timezones.
 
+
 ###Gets Retry Policies
 
 _**GET** /v1/retry_policies_
 
 Returns the possible retry policies along with the system default policy.
+
 
 ###Gets Retry Policy
 
