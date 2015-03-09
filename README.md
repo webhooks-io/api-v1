@@ -601,7 +601,6 @@ Adds an destination for an input.
 * ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
 * ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
 * ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
-* ```cert_ca``` - The CA of a cert to be used during the http request.
 
 ```js
 {
@@ -644,7 +643,6 @@ Updates the details of an destination.
 * ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
 * ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
 * ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
-* ```cert_ca``` - The CA of a cert to be used during the http request.
 
 ```js
 {
@@ -1109,6 +1107,66 @@ Returns the basic information regarding the status of the outgoing request.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
+
+SSL Certificates
+------
+
+Some intro into the API.
+
+
+###Import SSL Cert
+
+_**POST** /v1/accounts/:account_id/certificates/import_
+
+Imports an SSL cert into your account keystore.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+#### POST Parameters
+
+* ```domain``` (required) - The domain for the certificate that you wish to import (example: google.com)
+* ```port``` (required) - The port to use. (defaults to 443) (example: 443)
+
+```js
+{
+	domain: 'google.com'
+	port: '443'
+}
+```
+
+
+###Get SSL Certificate
+
+_**GET** /v1/accounts/:account_id/certificates/:certificate_id_
+
+Get an imported SSL certificate.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```certificate_id``` -  (example: api.webhooks.io:443)
+
+###List SSL Certificates
+
+_**GET** /v1/accounts/:account_id/certificates_
+
+Returns a collection of all the imported SSL certificates
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+###Delete SSL Certificate
+
+_**DELETE** /v1/accounts/:account_id/certificates/:certificate_id_
+
+Deletes an imported SSL certificate.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```certificate_id``` -  (example: api.webhooks.io:443)
 
 Users
 ------
