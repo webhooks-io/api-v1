@@ -667,6 +667,10 @@ Returns the details for a specfic destination.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+#### Query Parameters
+
+* ```include_certificate_data``` - Will return the imported SSL Certificate that will be used, if any. (Default is false) (example: true)
+
 
 ###List Destination
 
@@ -1097,6 +1101,17 @@ Returns the details regarding an outgoing message, including all attempts
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
 
+###Get Outgoing Message Attempt
+
+_**GET** /v1/accounts/:account_id/attempts/:attempt_id_
+
+Returns the details regarding an attempt for an outgoing message
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```attempt_id``` -  (example: ATe987d754d82a419e8c54c2185ed0ef29)
+
 ###Get Outgoing Message Status Details
 
 _**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id/status_
@@ -1116,7 +1131,7 @@ Some intro into the API.
 
 ###Import SSL Certificate
 
-_**POST** /v1/accounts/:account_id/certificates_
+_**PUT** /v1/accounts/:account_id/certificates_
 
 Imports an SSL cert into your account keystore so it can be used during webhook reqeusts.  This can be useful for self-signed SSL certificates.
 
