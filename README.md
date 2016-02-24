@@ -136,7 +136,7 @@ Lists all accounts.
 
 _**GET** /v1/accounts/:account_id_
 
-Returns the details of a specfic account.
+Returns the details of a specific account.
 
 #### URI Path Parameters
 
@@ -439,6 +439,12 @@ Returns the details for a specfic bucket.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```bucket_id``` -  (example: BUe987d754d82a419e8c54c2185ed0ef29)
 
+#### Query Parameters
+
+* ```expand``` - If the results should be expanded to include the inputs and destinations (example: true)
+* ```include_stats``` - Include the traffic summary. (example: true)
+
+
 ###List Buckets
 
 _**GET** /v1/accounts/:account_id/buckets_
@@ -448,6 +454,11 @@ Returns a collection of buckets for an account.
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```expand``` - If the results should be expanded to include the inputs and destinations (example: true)
+
 
 ###Delete Bucket
 
@@ -616,6 +627,7 @@ Adds an destination for an input.
 * ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
 * ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
 * ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
+* ```rate_limit``` - The max rate for webhooks to be relayed.  This will default to your plan max. (example: 5)
 
 ```js
 {
@@ -627,6 +639,7 @@ Adds an destination for an input.
 	header_prefix: 'Webhooks'
 	alert_on_failure: 'bob@mail.com,john@email.com'
 	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
+	rate_limit: '5'
 }
 ```
 
@@ -659,6 +672,7 @@ Updates the details of an destination.
 * ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
 * ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
 * ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
+* ```rate_limit``` - The max rate for webhooks to be relayed.  This will default to your plan max. (example: 5)
 
 ```js
 {
@@ -669,6 +683,7 @@ Updates the details of an destination.
 	header_prefix: 'Webhooks'
 	alert_on_failure: 'bob@mail.com,john@email.com'
 	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
+	rate_limit: '5'
 }
 ```
 
@@ -677,7 +692,7 @@ Updates the details of an destination.
 
 _**GET** /v1/accounts/:account_id/destinations/:destination_id_
 
-Returns the details for a specfic destination.
+Returns the details for a specific destination.
 
 #### URI Path Parameters
 
@@ -1025,6 +1040,10 @@ Returns the HTML for the embedded view.
 * ```bucket_key``` - The bucket key the client token should be generated for.  This can be an arbitrary value that maps back to your system. (example: development)
 * ```paths``` - The permitted paths.
 * ```css_url``` - URL to a css file that will be applied to the application styles.
+* ```default_tab``` - The default tab to show.
+* ```show_introduction``` - If the introduction should be displayed.
+* ```introduction_url``` - The URL to the actual introduction.
+* ```element_id``` - The element id for the manager to populate.
 
 ```js
 {
@@ -1368,7 +1387,7 @@ Updates a users account information.
 
 _**GET** /v1/accounts/:account_id/users/:user_id_
 
-Returns the details for a specfic user.
+Returns the details for a specific user.
 
 #### URI Path Parameters
 
