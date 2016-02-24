@@ -1490,3 +1490,79 @@ Returns the details of a specific retry policy.
 #### URI Path Parameters
 
 * ```policy_id``` -  (example: linear)
+
+Gateway
+------
+
+Some intro into the API.
+
+
+###Gateway Auth Details
+
+_**GET** /v1/gateway/authentication/:type/:option_
+
+Returns the details for a specific authentication type.
+
+#### URI Path Parameters
+
+* ```type``` -  (example: input)
+* ```option``` -  (example: basic)
+
+###Gateway Auth Options
+
+_**GET** /v1/gateway/authentication/:type_
+
+Returns all the options for the gateway authentication.
+
+#### URI Path Parameters
+
+* ```type``` -  (example: input)
+
+###Request Gateway
+
+_**POST** /v1/:input_name/:input_id_
+
+This is the gateway for accepting incoming requests.
+
+#### URI Path Parameters
+
+* ```input_name``` -  (example: sample-input)
+* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
+
+###Request Gateway
+
+_**HEAD** /v1/:input_name/:input_id_
+
+This is the gateway for accepting incoming requests.
+
+#### URI Path Parameters
+
+* ```input_name``` -  (example: sample-input)
+* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
+
+###Resend Request
+
+_**POST** /v1/accounts/:account_id/resend_
+
+Duplicates the messages and attempts to resends them.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```outgoing_message_ids``` (required) - An array of all the outgoing message ids that should be resent.
+
+```js
+{
+}
+```
+
+
+###Retry Request
+
+_**POST** /v1/retry_
+
+Manually retries a webhook request.
+
