@@ -424,13 +424,17 @@ Creates a new subscription for an account.
 
 #### POST Parameters
 
-* ```user_id``` (required) - The user that is logged into the system.
-* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for.
-* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.
-* ```coupon_code``` - A coupon code to apply to this subscription.
+* ```user_id``` (required) - The user that is logged into the system. (example: USe987d754d82a419e8c54c2185ed0ef29)
+* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for. (example: plan-free-01)
+* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.  This is required if the value of the plan being added is greater than $0. (example: tok_17mJQS2eZvKYlo2CFZnKpZNx)
+* ```coupon_code``` - A coupon code to apply to this subscription. (example: my-coupon)
 
 ```js
 {
+	user_id: 'USe987d754d82a419e8c54c2185ed0ef29'
+	plan_id: 'plan-free-01'
+	payment_token: 'tok_17mJQS2eZvKYlo2CFZnKpZNx'
+	coupon_code: 'my-coupon'
 }
 ```
 
@@ -447,14 +451,18 @@ Updates the details of a subscription.
 
 #### POST Parameters
 
-* ```user_id``` (required) - The user that is logged into the system.
-* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for.
-* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.
-* ```coupon_code``` - A coupon code to apply to this subscription.
+* ```user_id``` - The user that is logged into the system.  This should be passed to change the billing contact on the account. (example: USe987d754d82a419e8c54c2185ed0ef29)
+* ```plan_id``` - The ID of the plan that the subscription should be change to. (example: plan-free-01)
+* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.  This only needs to be passed when changing the credit card info. (example: tok_17mJQS2eZvKYlo2CFZnKpZNx)
+* ```coupon_code``` - A coupon code to apply to this subscription. (example: my-coupon)
 * ```end_of_term``` - If the change should take effect at the end of the term, or now.  Defaults to now - false. (example: false)
 
 ```js
 {
+	user_id: 'USe987d754d82a419e8c54c2185ed0ef29'
+	plan_id: 'plan-free-01'
+	payment_token: 'tok_17mJQS2eZvKYlo2CFZnKpZNx'
+	coupon_code: 'my-coupon'
 	end_of_term: 'false'
 }
 ```
@@ -489,7 +497,7 @@ Returns the URL to a PDF version of an invoice.
 #### URI Path Parameters
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```invoice_id``` -  (example: 10)
+* ```invoice_id``` -  (example: IV10)
 
 ###Cancel Subscription
 
