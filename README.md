@@ -175,6 +175,37 @@ Deletes an account or sub account.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 
+###Get My Embedded View HTML
+
+_**POST** /v1/accounts/:account_id/embedded-view-html_
+
+Returns the HTML for the embedded view.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```bucket_key``` - The bucket key the client token should be generated for.  This can be an arbitrary value that maps back to your system. (example: development)
+* ```paths``` - The permitted paths.
+* ```css_url``` - URL to a css file that will be applied to the application styles.
+* ```default_tab``` - The default tab to show.
+* ```show_introduction``` - If the introduction should be displayed.
+* ```introduction_url``` - The URL to the actual introduction.
+* ```element_id``` - The element id for the manager to populate.
+* ```api_url``` - The API URL to use. (example: https://api.webhooks.io)
+* ```embedded_url``` - The embedded javascript file to use. (example: https://embedded.webhooks.io/js/embedded.js)
+
+```js
+{
+	bucket_key: 'development'
+	api_url: 'https://api.webhooks.io'
+	embedded_url: 'https://embedded.webhooks.io/js/embedded.js'
+}
+```
+
+
 Applications
 ------
 
@@ -298,16 +329,16 @@ Adds a version to an application.
 
 * ```key``` (required) - The key/id for this version. (example: 1.1)
 * ```release_date``` (required) - The date this version was released. (example: 2015-01-01)
-* ```version_json``` (required) - The complete JSON definition for the version. (example: {})
-* ```examples_json``` (required) - The complete JSON definition for the version examples/recipes (example: {})
+* ```version_json``` (required) - The complete JSON definition for the version. (example: [object Object])
+* ```examples_json``` (required) - The complete JSON definition for the version examples/recipes (example: [object Object])
 * ```active``` (required) - If the version should be active (viewable) or not. (example: true)
 
 ```js
 {
 	key: '1.1'
 	release_date: '2015-01-01'
-	version_json: '{}'
-	examples_json: '{}'
+	version_json: '[object Object]'
+	examples_json: '[object Object]'
 	active: 'true'
 }
 ```
@@ -856,14 +887,14 @@ Provides the ability to test a recipe to ensure the output is correct.  The reci
 
 #### POST Parameters
 
-* ```sample_code``` - Sample code to be used during the testing of this recipe. (example: {"name": "Sample Code", "details": "This is a sample test of the recipe processor"})
+* ```sample_code``` - Sample code to be used during the testing of this recipe. (example: [object Object])
 * ```type``` (required) - The type of recipe, either input or destination. (example: input)
 * ```recipe``` (required) - The recipe to be tested. (example: function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); })
 * ```event_type``` - The event type. (example: invoice.create)
 
 ```js
 {
-	sample_code: '{"name": "Sample Code", "details": "This is a sample test of the recipe processor"}'
+	sample_code: '[object Object]'
 	type: 'input'
 	recipe: 'function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); }'
 	event_type: 'invoice.create'
@@ -976,7 +1007,7 @@ Sends a webhook to a particular consumer of an application for the given bucket_
 
 ###Check consumer subscription
 
-_**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/check_
+_**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/check/:bucket_key_
 
 Checks to see if the consumer is subscribed to a given event or set of events.  If the event query param is not passed the complete list of events will be returned.
 
@@ -985,16 +1016,15 @@ Checks to see if the consumer is subscribed to a given event or set of events.  
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```consumer_id``` -  (example: my_customer_id)
+* ```bucket_key``` -  (example: development)
 
 #### POST Parameters
 
-* ```bucket_key``` (required) - The bucket key the subscription should be checked for. (example: development)
-* ```event_name``` (required) - The name of the event to check.
+* ```event_type``` (required) - The name of the event to check.
 * ```include_destination_detail``` - If the details of each subscribed destination should be returned.
 
 ```js
 {
-	bucket_key: 'development'
 }
 ```
 
@@ -1044,10 +1074,14 @@ Returns the HTML for the embedded view.
 * ```show_introduction``` - If the introduction should be displayed.
 * ```introduction_url``` - The URL to the actual introduction.
 * ```element_id``` - The element id for the manager to populate.
+* ```api_url``` - The API URL to use. (example: https://api.webhooks.io)
+* ```embedded_url``` - The embedded javascript file to use. (example: https://embedded.webhooks.io/js/embedded.js)
 
 ```js
 {
 	bucket_key: 'development'
+	api_url: 'https://api.webhooks.io'
+	embedded_url: 'https://embedded.webhooks.io/js/embedded.js'
 }
 ```
 
@@ -1565,4 +1599,104 @@ Duplicates the messages and attempts to resends them.
 _**POST** /v1/retry_
 
 Manually retries a webhook request.
+
+
+Billing
+------
+
+Some intro into the API.
+
+
+###Create Subscription
+
+_**POST** /v1/accounts/:account_id/subscriptions_
+
+Creates a new subscription for an account.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```user_id``` (required) - The user that is logged into the system.
+* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for.
+* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.
+* ```coupon_code``` - A coupon code to apply to this subscription.
+
+```js
+{
+}
+```
+
+
+###Update Subscription
+
+_**PUT** /v1/accounts/:account_id/subscriptions_
+
+Updates the details of a subscription.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```user_id``` (required) - The user that is logged into the system.
+* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for.
+* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.
+* ```coupon_code``` - A coupon code to apply to this subscription.
+* ```end_of_term``` - If the change should take effect at the end of the term, or now.  Defaults to now - false. (example: false)
+
+```js
+{
+	end_of_term: 'false'
+}
+```
+
+
+###Get Subscription Details
+
+_**GET** /v1/accounts/:account_id/subscriptions_
+
+Returns the details of a subscription for the customer.  Does not take pending changes into account.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+###List Invoices
+
+_**GET** /v1/accounts/:account_id/invoices_
+
+Returns a list of all invoices for an account
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+###Get Invoice
+
+_**GET** /v1/accounts/:account_id/invoices/:invoice_id_
+
+Returns the URL to a PDF version of an invoice.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```invoice_id``` -  (example: 10)
+
+###Cancel Subscription
+
+_**DELETE** /v1/accounts/:account_id/subscriptions_
+
+Cancels the current subscription, essentially moving it back to the default free plan.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```end_of_term``` - If the change should take effect at the end of the term, or now.  Defaults to now - false. (example: false)
 
