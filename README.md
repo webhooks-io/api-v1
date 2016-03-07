@@ -209,7 +209,7 @@ Returns the HTML for the embedded view.
 Applications
 ------
 
-Some intro into the API.
+
 
 
 ###Create Application
@@ -409,7 +409,7 @@ Deletes a version for an application.
 Billing
 ------
 
-Some intro into the API.
+
 
 
 ###Create Subscription
@@ -509,7 +509,7 @@ Cancels the current subscription, essentially moving it back to the default free
 Buckets
 ------
 
-Some intro into the API.
+
 
 
 ###Create Bucket
@@ -605,7 +605,7 @@ Deletes a bucket.
 Destinations
 ------
 
-Some intro into the API.
+
 
 
 ###Create Destination
@@ -743,7 +743,7 @@ Deletes an destination.
 Gateway
 ------
 
-Some intro into the API.
+
 
 
 ###Gateway Auth Details
@@ -819,7 +819,7 @@ Manually retries a webhook request.
 Inputs
 ------
 
-Some intro into the API.
+
 
 
 ###Create Input
@@ -938,277 +938,10 @@ Deletes an input.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
 
-Recipes
-------
-
-Some intro into the API.
-
-
-###Create Recipe
-
-_**POST** /v1/accounts/:account_id/recipes_
-
-Adds a Recipe to an account
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```name``` (required) - Name for the recipe. (example: My Recipe)
-* ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
-* ```type``` (required) - The type of recipe, either input or destination. (example: input)
-* ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
-* ```recipe_draft``` (required) - During development, this is the recipe that is saved. (example: return { x: 1, x: 2 };)
-* ```run_on_each_attempt``` - If the recipe should be run each time it is attempted. (example: true)
-
-```js
-{
-	name: 'My Recipe'
-	type: 'input'
-	notes: 'This is used to transform the payload to work with Slack webhooks.'
-	recipe_draft: 'return { x: 1, x: 2 };'
-	run_on_each_attempt: 'true'
-}
-```
-
-
-###Update Recipe
-
-_**PUT** /v1/accounts/:account_id/recipes/:recipe_id_
-
-Updates a Recipe.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```name``` (required) - Name for the recipe. (example: My Recipe)
-* ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
-* ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
-* ```recipe_draft``` (required) - During development, this is the recipe that is saved. (example: return { x: 1, x: 2 };)
-* ```run_on_each_attempt``` - If the recipe should be run each time it is attempted. (example: true)
-
-```js
-{
-	name: 'My Recipe'
-	notes: 'This is used to transform the payload to work with Slack webhooks.'
-	recipe_draft: 'return { x: 1, x: 2 };'
-	run_on_each_attempt: 'true'
-}
-```
-
-
-###Publish Recipe
-
-_**POST** /v1/accounts/:account_id/recipes/:recipe_id/publish_
-
-Publishes the draft recipe so it can be used as the production recipe.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
-
-###Get Recipe
-
-_**GET** /v1/accounts/:account_id/recipes/:recipe_id_
-
-Returns the details for a specfic recipe.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
-
-###List Recipe
-
-_**GET** /v1/accounts/:account_id/recipes_
-
-Returns a collection of recipes for an account.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```type``` - The type of recipe, either input or destination. (example: input)
-
-
-###Delete Recipe
-
-_**DELETE** /v1/accounts/:account_id/recipes/:recipe_id_
-
-Deletes a Recipe.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
-
-###Test Recipe
-
-_**PUT** /v1/accounts/:account_id/recipes/test_
-
-Provides the ability to test a recipe to ensure the output is correct.  The recipe MUST be wrapped in 'function wh(){}' and return exit([data]) as shown in the sample below.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```sample_code``` - Sample code to be used during the testing of this recipe. (example: [object Object])
-* ```type``` (required) - The type of recipe, either input or destination. (example: input)
-* ```recipe``` (required) - The recipe to be tested. (example: function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); })
-* ```event_type``` - The event type. (example: invoice.create)
-
-```js
-{
-	sample_code: '[object Object]'
-	type: 'input'
-	recipe: 'function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); }'
-	event_type: 'invoice.create'
-}
-```
-
-
-Reporting
-------
-
-Some intro into the API.
-
-
-###Overview Report
-
-_**GET** /v1/accounts/:account_id/stats/overview_
-
-Returns a general overview.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```start_date``` (required) - The start date for the data.
-* ```end_date``` (required) - The end date for the data.
-* ```precision``` (required) - The end date for the data.
-* ```application_id``` - The application id the data should be filtered with.
-* ```bucket_id``` - The end date for the data.
-* ```destination_id``` - The end date for the data.
-* ```input_id``` - The end date for the data.
-* ```include_sub_accounts``` - If sub account data should be included.
-
-
-###Summary Report
-
-_**GET** /v1/accounts/:account_id/stats/summary_
-
-Returns a general summary report.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```start_date``` - The start date for the data.
-* ```end_date``` - The end date for the data.
-* ```bucket_id``` - The end date for the data.
-* ```destination_id``` - The end date for the data.
-* ```input_id``` - The end date for the data.
-
-
-###Request Log
-
-_**GET** /v1/accounts/:account_id/log_
-
-Returns a log of all messages.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```start_date``` - The start date for the data.  This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
-* ```end_date``` - The end date for the data. This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
-* ```input_id``` - 
-* ```bucket_id``` - 
-* ```http_status``` - 
-
-
-SSL Certificates
-------
-
-Some intro into the API.
-
-
-###Import SSL Certificate
-
-_**PUT** /v1/accounts/:account_id/certificates_
-
-Imports an SSL cert into your account keystore so it can be used during webhook reqeusts.  This can be useful for self-signed SSL certificates.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```domain``` (required) - The domain for the certificate that you wish to import (example: api.webhooks.io)
-* ```port``` (required) - The port to use. (defaults to 443) (example: 443)
-
-```js
-{
-	domain: 'api.webhooks.io'
-	port: '443'
-}
-```
-
-
-###Get SSL Certificate
-
-_**GET** /v1/accounts/:account_id/certificates/:certificate_id_
-
-Get an imported SSL certificate.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```certificate_id``` -  (example: api.webhooks.io:443)
-
-###List SSL Certificates
-
-_**GET** /v1/accounts/:account_id/certificates_
-
-Returns a collection of all the imported SSL certificates
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-###Delete SSL Certificate
-
-_**DELETE** /v1/accounts/:account_id/certificates/:certificate_id_
-
-Deletes an imported SSL certificate.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```certificate_id``` -  (example: api.webhooks.io:443)
-
 Messages
 ------
 
-Some intro into the API.
+
 
 
 ###Get Incoming Message
@@ -1263,7 +996,7 @@ Returns the basic information regarding the status of the outgoing request.
 Providers
 ------
 
-Some intro into the API.
+
 
 
 ###Create Consumer
@@ -1444,10 +1177,277 @@ Returns the HTML for the embedded view.
 ```
 
 
+Recipes
+------
+
+
+
+
+###Create Recipe
+
+_**POST** /v1/accounts/:account_id/recipes_
+
+Adds a Recipe to an account
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```name``` (required) - Name for the recipe. (example: My Recipe)
+* ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
+* ```type``` (required) - The type of recipe, either input or destination. (example: input)
+* ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
+* ```recipe_draft``` (required) - During development, this is the recipe that is saved. (example: return { x: 1, x: 2 };)
+* ```run_on_each_attempt``` - If the recipe should be run each time it is attempted. (example: true)
+
+```js
+{
+	name: 'My Recipe'
+	type: 'input'
+	notes: 'This is used to transform the payload to work with Slack webhooks.'
+	recipe_draft: 'return { x: 1, x: 2 };'
+	run_on_each_attempt: 'true'
+}
+```
+
+
+###Update Recipe
+
+_**PUT** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Updates a Recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```name``` (required) - Name for the recipe. (example: My Recipe)
+* ```sample_code``` - Sample code used to pass to the recipe during editing to test script.
+* ```notes``` - Any notes required to help understand the recipe. (example: This is used to transform the payload to work with Slack webhooks.)
+* ```recipe_draft``` (required) - During development, this is the recipe that is saved. (example: return { x: 1, x: 2 };)
+* ```run_on_each_attempt``` - If the recipe should be run each time it is attempted. (example: true)
+
+```js
+{
+	name: 'My Recipe'
+	notes: 'This is used to transform the payload to work with Slack webhooks.'
+	recipe_draft: 'return { x: 1, x: 2 };'
+	run_on_each_attempt: 'true'
+}
+```
+
+
+###Publish Recipe
+
+_**POST** /v1/accounts/:account_id/recipes/:recipe_id/publish_
+
+Publishes the draft recipe so it can be used as the production recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+###Get Recipe
+
+_**GET** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Returns the details for a specfic recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+###List Recipe
+
+_**GET** /v1/accounts/:account_id/recipes_
+
+Returns a collection of recipes for an account.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```type``` - The type of recipe, either input or destination. (example: input)
+
+
+###Delete Recipe
+
+_**DELETE** /v1/accounts/:account_id/recipes/:recipe_id_
+
+Deletes a Recipe.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```recipe_id``` -  (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+###Test Recipe
+
+_**PUT** /v1/accounts/:account_id/recipes/test_
+
+Provides the ability to test a recipe to ensure the output is correct.  The recipe MUST be wrapped in 'function wh(){}' and return exit([data]) as shown in the sample below.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```sample_code``` - Sample code to be used during the testing of this recipe. (example: [object Object])
+* ```type``` (required) - The type of recipe, either input or destination. (example: input)
+* ```recipe``` (required) - The recipe to be tested. (example: function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); })
+* ```event_type``` - The event type. (example: invoice.create)
+
+```js
+{
+	sample_code: '[object Object]'
+	type: 'input'
+	recipe: 'function wh(){ result.data = {"name": data.name, "client_id": 8000}; exit(result); }'
+	event_type: 'invoice.create'
+}
+```
+
+
+Reporting
+------
+
+
+
+
+###Overview Report
+
+_**GET** /v1/accounts/:account_id/stats/overview_
+
+Returns a general overview.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```start_date``` (required) - The start date for the data.
+* ```end_date``` (required) - The end date for the data.
+* ```precision``` (required) - The end date for the data.
+* ```application_id``` - The application id the data should be filtered with.
+* ```bucket_id``` - The end date for the data.
+* ```destination_id``` - The end date for the data.
+* ```input_id``` - The end date for the data.
+* ```include_sub_accounts``` - If sub account data should be included.
+
+
+###Summary Report
+
+_**GET** /v1/accounts/:account_id/stats/summary_
+
+Returns a general summary report.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```start_date``` - The start date for the data.
+* ```end_date``` - The end date for the data.
+* ```bucket_id``` - The end date for the data.
+* ```destination_id``` - The end date for the data.
+* ```input_id``` - The end date for the data.
+
+
+###Request Log
+
+_**GET** /v1/accounts/:account_id/log_
+
+Returns a log of all messages.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```start_date``` - The start date for the data.  This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
+* ```end_date``` - The end date for the data. This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
+* ```input_id``` - 
+* ```bucket_id``` - 
+* ```http_status``` - 
+
+
+SSL Certificates
+------
+
+
+
+
+###Import SSL Certificate
+
+_**PUT** /v1/accounts/:account_id/certificates_
+
+Imports an SSL cert into your account keystore so it can be used during webhook reqeusts.  This can be useful for self-signed SSL certificates.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```domain``` (required) - The domain for the certificate that you wish to import (example: api.webhooks.io)
+* ```port``` (required) - The port to use. (defaults to 443) (example: 443)
+
+```js
+{
+	domain: 'api.webhooks.io'
+	port: '443'
+}
+```
+
+
+###Get SSL Certificate
+
+_**GET** /v1/accounts/:account_id/certificates/:certificate_id_
+
+Get an imported SSL certificate.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```certificate_id``` -  (example: api.webhooks.io:443)
+
+###List SSL Certificates
+
+_**GET** /v1/accounts/:account_id/certificates_
+
+Returns a collection of all the imported SSL certificates
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+###Delete SSL Certificate
+
+_**DELETE** /v1/accounts/:account_id/certificates/:certificate_id_
+
+Deletes an imported SSL certificate.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```certificate_id``` -  (example: api.webhooks.io:443)
+
 Users
 ------
 
-Some intro into the API.
+
 
 
 ###Login
@@ -1650,7 +1650,7 @@ Resends a verification email for a user.
 Utils
 ------
 
-Some intro into the API.
+
 
 
 ###Health Check
