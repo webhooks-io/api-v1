@@ -406,6 +406,106 @@ Deletes a version for an application.
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```application_version_id``` -  (example: AVe987d754d82a419e8c54c2185ed0ef29)
 
+Billing
+------
+
+Some intro into the API.
+
+
+###Create Subscription
+
+_**POST** /v1/accounts/:account_id/subscriptions_
+
+Creates a new subscription for an account.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```user_id``` (required) - The user that is logged into the system.
+* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for.
+* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.
+* ```coupon_code``` - A coupon code to apply to this subscription.
+
+```js
+{
+}
+```
+
+
+###Update Subscription
+
+_**PUT** /v1/accounts/:account_id/subscriptions_
+
+Updates the details of a subscription.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```user_id``` (required) - The user that is logged into the system.
+* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for.
+* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.
+* ```coupon_code``` - A coupon code to apply to this subscription.
+* ```end_of_term``` - If the change should take effect at the end of the term, or now.  Defaults to now - false. (example: false)
+
+```js
+{
+	end_of_term: 'false'
+}
+```
+
+
+###Get Subscription Details
+
+_**GET** /v1/accounts/:account_id/subscriptions_
+
+Returns the details of a subscription for the customer.  Does not take pending changes into account.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+###List Invoices
+
+_**GET** /v1/accounts/:account_id/invoices_
+
+Returns a list of all invoices for an account
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+###Get Invoice
+
+_**GET** /v1/accounts/:account_id/invoices/:invoice_id_
+
+Returns the URL to a PDF version of an invoice.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```invoice_id``` -  (example: 10)
+
+###Cancel Subscription
+
+_**DELETE** /v1/accounts/:account_id/subscriptions_
+
+Cancels the current subscription, essentially moving it back to the default free plan.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```end_of_term``` - If the change should take effect at the end of the term, or now.  Defaults to now - false. (example: false)
+
+
 Buckets
 ------
 
@@ -501,128 +601,6 @@ Deletes a bucket.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```bucket_id``` -  (example: BUe987d754d82a419e8c54c2185ed0ef29)
-
-Inputs
-------
-
-Some intro into the API.
-
-
-###Create Input
-
-_**POST** /v1/accounts/:account_id/inputs_
-
-Adds an input to an account
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```bucket_id``` (required) - The bucket the input belongs to (example: BUe987d754d82a419e8c54c2185ed0ef29)
-* ```name``` (required) - Name for the input. (example: My Bucket)
-* ```status``` - The status of the bucket, defaults to active.
-* ```event_location``` - The location of the event, header, payload, query param, etc (example: payload)
-* ```event_path``` - The path to the value that specifies what type of event is coming in.  This starts with the value msg. (example: msg.event)
-* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
-* ```delivery_mode``` - The mode the request should be made in.  Valid options include sync and async.
-* ```response_code``` - HTTP Response code to provide upon hook receipt - defaults to 200
-* ```response_content``` - Any content that should be provided upon hook receipt.
-* ```response_content_type``` - The content type that should be returned upon hook receipt, this should mirror the data in the response_content variable. (example: application/json)
-* ```authentication_failures``` - How to handle authentication failures.
-* ```authentication_type``` - The type of authentication to apply to incoming requests.
-* ```recipe_id``` - If a recipe should be applied to messages coming through this input it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
-
-```js
-{
-	bucket_id: 'BUe987d754d82a419e8c54c2185ed0ef29'
-	name: 'My Bucket'
-	event_location: 'payload'
-	event_path: 'msg.event'
-	event_filters: 'account.created,message.sent'
-	response_content_type: 'application/json'
-	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
-}
-```
-
-
-###Update Input
-
-_**PUT** /v1/accounts/:account_id/inputs/:input_id_
-
-Updates the details for an input.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```name``` (required) - Name for the input. (example: My Bucket)
-* ```status``` - The status of the bucket, defaults to active.
-* ```event_location``` - The location of the event, header, payload, query param, etc (example: payload)
-* ```event_path``` - The path to the value that specifies what type of event is coming in.  This starts with the value msg. (example: msg.event)
-* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
-* ```delivery_mode``` - The mode the request should be made in.  Valid options include sync and async.
-* ```response_code``` - HTTP Response code to provide upon hook receipt - defaults to 200
-* ```response_content``` - Any content that should be provided upon hook receipt.
-* ```response_content_type``` - The content type that should be returned upon hook receipt, this should mirror the data in the response_content variable. (example: application/json)
-* ```authentication_failures``` - How to handle authentication failures.
-* ```authentication_type``` - The type of authentication to apply to incoming requests.
-* ```recipe_id``` - If a recipe should be applied to messages coming through this input it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
-
-```js
-{
-	name: 'My Bucket'
-	event_location: 'payload'
-	event_path: 'msg.event'
-	event_filters: 'account.created,message.sent'
-	response_content_type: 'application/json'
-	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
-}
-```
-
-
-###Get Input
-
-_**GET** /v1/accounts/:account_id/inputs/:input_id_
-
-Returns the details for a specfic input.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
-
-###List Inputs
-
-_**GET** /v1/accounts/:account_id/buckets/:bucket_id/inputs_
-
-Returns a collection of inputs for an account.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```bucket_id``` -  (example: BUe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```key``` - Name for the bucket.
-* ```event_filter``` - The event that should be filtered on.
-
-
-###Delete Input
-
-_**DELETE** /v1/accounts/:account_id/inputs/:input_id_
-
-Deletes an input.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
 
 Destinations
 ------
@@ -761,6 +739,204 @@ Deletes an destination.
 
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+
+Gateway
+------
+
+Some intro into the API.
+
+
+###Gateway Auth Details
+
+_**GET** /v1/gateway/authentication/:type/:option_
+
+Returns the details for a specific authentication type.
+
+#### URI Path Parameters
+
+* ```type``` -  (example: input)
+* ```option``` -  (example: basic)
+
+###Gateway Auth Options
+
+_**GET** /v1/gateway/authentication/:type_
+
+Returns all the options for the gateway authentication.
+
+#### URI Path Parameters
+
+* ```type``` -  (example: input)
+
+###Request Gateway
+
+_**POST** /v1/:input_name/:input_id_
+
+This is the gateway for accepting incoming requests.
+
+#### URI Path Parameters
+
+* ```input_name``` -  (example: sample-input)
+* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
+
+###Request Gateway
+
+_**HEAD** /v1/:input_name/:input_id_
+
+This is the gateway for accepting incoming requests.
+
+#### URI Path Parameters
+
+* ```input_name``` -  (example: sample-input)
+* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
+
+###Resend Request
+
+_**POST** /v1/accounts/:account_id/resend_
+
+Duplicates the messages and attempts to resends them.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```outgoing_message_ids``` (required) - An array of all the outgoing message ids that should be resent.
+
+```js
+{
+}
+```
+
+
+###Retry Request
+
+_**POST** /v1/retry_
+
+Manually retries a webhook request.
+
+
+Inputs
+------
+
+Some intro into the API.
+
+
+###Create Input
+
+_**POST** /v1/accounts/:account_id/inputs_
+
+Adds an input to an account
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```bucket_id``` (required) - The bucket the input belongs to (example: BUe987d754d82a419e8c54c2185ed0ef29)
+* ```name``` (required) - Name for the input. (example: My Bucket)
+* ```status``` - The status of the bucket, defaults to active.
+* ```event_location``` - The location of the event, header, payload, query param, etc (example: payload)
+* ```event_path``` - The path to the value that specifies what type of event is coming in.  This starts with the value msg. (example: msg.event)
+* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
+* ```delivery_mode``` - The mode the request should be made in.  Valid options include sync and async.
+* ```response_code``` - HTTP Response code to provide upon hook receipt - defaults to 200
+* ```response_content``` - Any content that should be provided upon hook receipt.
+* ```response_content_type``` - The content type that should be returned upon hook receipt, this should mirror the data in the response_content variable. (example: application/json)
+* ```authentication_failures``` - How to handle authentication failures.
+* ```authentication_type``` - The type of authentication to apply to incoming requests.
+* ```recipe_id``` - If a recipe should be applied to messages coming through this input it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+```js
+{
+	bucket_id: 'BUe987d754d82a419e8c54c2185ed0ef29'
+	name: 'My Bucket'
+	event_location: 'payload'
+	event_path: 'msg.event'
+	event_filters: 'account.created,message.sent'
+	response_content_type: 'application/json'
+	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
+}
+```
+
+
+###Update Input
+
+_**PUT** /v1/accounts/:account_id/inputs/:input_id_
+
+Updates the details for an input.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```name``` (required) - Name for the input. (example: My Bucket)
+* ```status``` - The status of the bucket, defaults to active.
+* ```event_location``` - The location of the event, header, payload, query param, etc (example: payload)
+* ```event_path``` - The path to the value that specifies what type of event is coming in.  This starts with the value msg. (example: msg.event)
+* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
+* ```delivery_mode``` - The mode the request should be made in.  Valid options include sync and async.
+* ```response_code``` - HTTP Response code to provide upon hook receipt - defaults to 200
+* ```response_content``` - Any content that should be provided upon hook receipt.
+* ```response_content_type``` - The content type that should be returned upon hook receipt, this should mirror the data in the response_content variable. (example: application/json)
+* ```authentication_failures``` - How to handle authentication failures.
+* ```authentication_type``` - The type of authentication to apply to incoming requests.
+* ```recipe_id``` - If a recipe should be applied to messages coming through this input it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
+
+```js
+{
+	name: 'My Bucket'
+	event_location: 'payload'
+	event_path: 'msg.event'
+	event_filters: 'account.created,message.sent'
+	response_content_type: 'application/json'
+	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
+}
+```
+
+
+###Get Input
+
+_**GET** /v1/accounts/:account_id/inputs/:input_id_
+
+Returns the details for a specfic input.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
+
+###List Inputs
+
+_**GET** /v1/accounts/:account_id/buckets/:bucket_id/inputs_
+
+Returns a collection of inputs for an account.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```bucket_id``` -  (example: BUe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```key``` - Name for the bucket.
+* ```event_filter``` - The event that should be filtered on.
+
+
+###Delete Input
+
+_**DELETE** /v1/accounts/:account_id/inputs/:input_id_
+
+Deletes an input.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
 
 Recipes
 ------
@@ -901,6 +1077,188 @@ Provides the ability to test a recipe to ensure the output is correct.  The reci
 }
 ```
 
+
+Reporting
+------
+
+Some intro into the API.
+
+
+###Overview Report
+
+_**GET** /v1/accounts/:account_id/stats/overview_
+
+Returns a general overview.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```start_date``` (required) - The start date for the data.
+* ```end_date``` (required) - The end date for the data.
+* ```precision``` (required) - The end date for the data.
+* ```application_id``` - The application id the data should be filtered with.
+* ```bucket_id``` - The end date for the data.
+* ```destination_id``` - The end date for the data.
+* ```input_id``` - The end date for the data.
+* ```include_sub_accounts``` - If sub account data should be included.
+
+
+###Summary Report
+
+_**GET** /v1/accounts/:account_id/stats/summary_
+
+Returns a general summary report.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```start_date``` - The start date for the data.
+* ```end_date``` - The end date for the data.
+* ```bucket_id``` - The end date for the data.
+* ```destination_id``` - The end date for the data.
+* ```input_id``` - The end date for the data.
+
+
+###Request Log
+
+_**GET** /v1/accounts/:account_id/log_
+
+Returns a log of all messages.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```start_date``` - The start date for the data.  This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
+* ```end_date``` - The end date for the data. This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
+* ```input_id``` - 
+* ```bucket_id``` - 
+* ```http_status``` - 
+
+
+SSL Certificates
+------
+
+Some intro into the API.
+
+
+###Import SSL Certificate
+
+_**PUT** /v1/accounts/:account_id/certificates_
+
+Imports an SSL cert into your account keystore so it can be used during webhook reqeusts.  This can be useful for self-signed SSL certificates.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```domain``` (required) - The domain for the certificate that you wish to import (example: api.webhooks.io)
+* ```port``` (required) - The port to use. (defaults to 443) (example: 443)
+
+```js
+{
+	domain: 'api.webhooks.io'
+	port: '443'
+}
+```
+
+
+###Get SSL Certificate
+
+_**GET** /v1/accounts/:account_id/certificates/:certificate_id_
+
+Get an imported SSL certificate.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```certificate_id``` -  (example: api.webhooks.io:443)
+
+###List SSL Certificates
+
+_**GET** /v1/accounts/:account_id/certificates_
+
+Returns a collection of all the imported SSL certificates
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+
+###Delete SSL Certificate
+
+_**DELETE** /v1/accounts/:account_id/certificates/:certificate_id_
+
+Deletes an imported SSL certificate.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```certificate_id``` -  (example: api.webhooks.io:443)
+
+Messages
+------
+
+Some intro into the API.
+
+
+###Get Incoming Message
+
+_**GET** /v1/accounts/:account_id/incoming/:incoming_message_id_
+
+Returns the details regarding an incoming message.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```incoming_message_id``` -  (example: IMe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```include_outgoing_messages``` - If the outgoing messages should be included as well.
+
+
+###Get Outgoing Message
+
+_**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id_
+
+Returns the details regarding an outgoing message, including all attempts
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
+
+###Get Outgoing Message Attempt
+
+_**GET** /v1/accounts/:account_id/attempts/:attempt_id_
+
+Returns the details regarding an attempt for an outgoing message
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```attempt_id``` -  (example: ATe987d754d82a419e8c54c2185ed0ef29)
+
+###Get Outgoing Message Status Details
+
+_**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id/status_
+
+Returns the basic information regarding the status of the outgoing request.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
 
 Providers
 ------
@@ -1085,188 +1443,6 @@ Returns the HTML for the embedded view.
 }
 ```
 
-
-Reporting
-------
-
-Some intro into the API.
-
-
-###Overview Report
-
-_**GET** /v1/accounts/:account_id/stats/overview_
-
-Returns a general overview.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```start_date``` (required) - The start date for the data.
-* ```end_date``` (required) - The end date for the data.
-* ```precision``` (required) - The end date for the data.
-* ```application_id``` - The application id the data should be filtered with.
-* ```bucket_id``` - The end date for the data.
-* ```destination_id``` - The end date for the data.
-* ```input_id``` - The end date for the data.
-* ```include_sub_accounts``` - If sub account data should be included.
-
-
-###Summary Report
-
-_**GET** /v1/accounts/:account_id/stats/summary_
-
-Returns a general summary report.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```start_date``` - The start date for the data.
-* ```end_date``` - The end date for the data.
-* ```bucket_id``` - The end date for the data.
-* ```destination_id``` - The end date for the data.
-* ```input_id``` - The end date for the data.
-
-
-###Request Log
-
-_**GET** /v1/accounts/:account_id/log_
-
-Returns a log of all messages.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```start_date``` - The start date for the data.  This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
-* ```end_date``` - The end date for the data. This can be an exact UTC date or a texted based time period.  Valid text time periods can be found at: http://sugarjs.com/date_formats#text_formats
-* ```input_id``` - 
-* ```bucket_id``` - 
-* ```http_status``` - 
-
-
-Messages
-------
-
-Some intro into the API.
-
-
-###Get Incoming Message
-
-_**GET** /v1/accounts/:account_id/incoming/:incoming_message_id_
-
-Returns the details regarding an incoming message.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```incoming_message_id``` -  (example: IMe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```include_outgoing_messages``` - If the outgoing messages should be included as well.
-
-
-###Get Outgoing Message
-
-_**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id_
-
-Returns the details regarding an outgoing message, including all attempts
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
-
-###Get Outgoing Message Attempt
-
-_**GET** /v1/accounts/:account_id/attempts/:attempt_id_
-
-Returns the details regarding an attempt for an outgoing message
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```attempt_id``` -  (example: ATe987d754d82a419e8c54c2185ed0ef29)
-
-###Get Outgoing Message Status Details
-
-_**GET** /v1/accounts/:account_id/outgoing/:outgoing_message_id/status_
-
-Returns the basic information regarding the status of the outgoing request.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```outgoing_message_id``` -  (example: OMe987d754d82a419e8c54c2185ed0ef29)
-
-SSL Certificates
-------
-
-Some intro into the API.
-
-
-###Import SSL Certificate
-
-_**PUT** /v1/accounts/:account_id/certificates_
-
-Imports an SSL cert into your account keystore so it can be used during webhook reqeusts.  This can be useful for self-signed SSL certificates.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```domain``` (required) - The domain for the certificate that you wish to import (example: api.webhooks.io)
-* ```port``` (required) - The port to use. (defaults to 443) (example: 443)
-
-```js
-{
-	domain: 'api.webhooks.io'
-	port: '443'
-}
-```
-
-
-###Get SSL Certificate
-
-_**GET** /v1/accounts/:account_id/certificates/:certificate_id_
-
-Get an imported SSL certificate.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```certificate_id``` -  (example: api.webhooks.io:443)
-
-###List SSL Certificates
-
-_**GET** /v1/accounts/:account_id/certificates_
-
-Returns a collection of all the imported SSL certificates
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-###Delete SSL Certificate
-
-_**DELETE** /v1/accounts/:account_id/certificates/:certificate_id_
-
-Deletes an imported SSL certificate.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```certificate_id``` -  (example: api.webhooks.io:443)
 
 Users
 ------
@@ -1524,179 +1700,3 @@ Returns the details of a specific retry policy.
 #### URI Path Parameters
 
 * ```policy_id``` -  (example: linear)
-
-Gateway
-------
-
-Some intro into the API.
-
-
-###Gateway Auth Details
-
-_**GET** /v1/gateway/authentication/:type/:option_
-
-Returns the details for a specific authentication type.
-
-#### URI Path Parameters
-
-* ```type``` -  (example: input)
-* ```option``` -  (example: basic)
-
-###Gateway Auth Options
-
-_**GET** /v1/gateway/authentication/:type_
-
-Returns all the options for the gateway authentication.
-
-#### URI Path Parameters
-
-* ```type``` -  (example: input)
-
-###Request Gateway
-
-_**POST** /v1/:input_name/:input_id_
-
-This is the gateway for accepting incoming requests.
-
-#### URI Path Parameters
-
-* ```input_name``` -  (example: sample-input)
-* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
-
-###Request Gateway
-
-_**HEAD** /v1/:input_name/:input_id_
-
-This is the gateway for accepting incoming requests.
-
-#### URI Path Parameters
-
-* ```input_name``` -  (example: sample-input)
-* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
-
-###Resend Request
-
-_**POST** /v1/accounts/:account_id/resend_
-
-Duplicates the messages and attempts to resends them.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```outgoing_message_ids``` (required) - An array of all the outgoing message ids that should be resent.
-
-```js
-{
-}
-```
-
-
-###Retry Request
-
-_**POST** /v1/retry_
-
-Manually retries a webhook request.
-
-
-Billing
-------
-
-Some intro into the API.
-
-
-###Create Subscription
-
-_**POST** /v1/accounts/:account_id/subscriptions_
-
-Creates a new subscription for an account.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```user_id``` (required) - The user that is logged into the system.
-* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for.
-* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.
-* ```coupon_code``` - A coupon code to apply to this subscription.
-
-```js
-{
-}
-```
-
-
-###Update Subscription
-
-_**PUT** /v1/accounts/:account_id/subscriptions_
-
-Updates the details of a subscription.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```user_id``` (required) - The user that is logged into the system.
-* ```plan_id``` (required) - The ID of the plan that the subscription is to be started for.
-* ```payment_token``` - The temporary stripe payment token used for the payment of the subscription.
-* ```coupon_code``` - A coupon code to apply to this subscription.
-* ```end_of_term``` - If the change should take effect at the end of the term, or now.  Defaults to now - false. (example: false)
-
-```js
-{
-	end_of_term: 'false'
-}
-```
-
-
-###Get Subscription Details
-
-_**GET** /v1/accounts/:account_id/subscriptions_
-
-Returns the details of a subscription for the customer.  Does not take pending changes into account.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-###List Invoices
-
-_**GET** /v1/accounts/:account_id/invoices_
-
-Returns a list of all invoices for an account
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-###Get Invoice
-
-_**GET** /v1/accounts/:account_id/invoices/:invoice_id_
-
-Returns the URL to a PDF version of an invoice.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```invoice_id``` -  (example: 10)
-
-###Cancel Subscription
-
-_**DELETE** /v1/accounts/:account_id/subscriptions_
-
-Cancels the current subscription, essentially moving it back to the default free plan.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```end_of_term``` - If the change should take effect at the end of the term, or now.  Defaults to now - false. (example: false)
-
