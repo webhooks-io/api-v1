@@ -748,147 +748,6 @@ Deletes an destination.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
 
-###Create Consumer Destination
-
-_**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations_
-
-Adds an destination for a consumer.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-
-#### POST Parameters
-
-* ```name``` (required) - Name for the destination. (example: My Final Destination)
-* ```endpoint_url``` (required) - The URL the messages should be sent to. (example: http://mydomain.com/webhook-endpoint)
-* ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
-* ```status``` - The status of the bucket, defaults to active.
-* ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
-* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
-* ```authentication_type``` - The type of authentication to apply to incoming requests.
-* ```retry_policy_id``` - The retry algorithm that will be used for failed attempts.
-* ```retry_count``` - The number of times the hook will be retried.
-* ```retry_interval``` - The interval for which the retries will be set.
-* ```verify_ssl``` - Ensure the SSL certificate is trusted and valid.  If false, this will bypass this protection.
-* ```headers_to_include``` - A comma delimited list of custom headers to include.
-* ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
-* ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
-* ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
-* ```rate_limit``` - The max rate for webhooks to be relayed.  This will default to your plan max. (example: 5)
-
-```js
-{
-	name: 'My Final Destination'
-	endpoint_url: 'http://mydomain.com/webhook-endpoint'
-	delivery_order: 'random'
-	message_method: 'GET'
-	event_filters: 'account.created,message.sent'
-	header_prefix: 'Webhooks'
-	alert_on_failure: 'bob@mail.com,john@email.com'
-	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
-	rate_limit: '5'
-}
-```
-
-
-###Update Consumer Destination
-
-_**PUT** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
-
-Updates the details of an destination for a consumer.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
-
-#### POST Parameters
-
-* ```name``` (required) - Name for the input. (example: My Final Destination)
-* ```endpoint_url``` (required) - The URL the messages should be sent to.
-* ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
-* ```status``` - The status of the bucket, defaults to active.
-* ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
-* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
-* ```authentication_type``` - The type of authentication to apply to incoming requests.
-* ```retry_policy_id``` - The retry algorithm that will be used for failed attempts.
-* ```retry_count``` - The number of times the hook will be retried.
-* ```retry_interval``` - The interval for which the retries will be set.
-* ```verify_ssl``` - Ensure the SSL certificate is trusted and valid.  If false, this will bypass this protection.
-* ```headers_to_include``` - A comma delimited list of custom headers to include.
-* ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
-* ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
-* ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
-* ```rate_limit``` - The max rate for webhooks to be relayed.  This will default to your plan max. (example: 5)
-
-```js
-{
-	name: 'My Final Destination'
-	delivery_order: 'random'
-	message_method: 'GET'
-	event_filters: 'account.created,message.sent'
-	header_prefix: 'Webhooks'
-	alert_on_failure: 'bob@mail.com,john@email.com'
-	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
-	rate_limit: '5'
-}
-```
-
-
-###Get Consumer Destination
-
-_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
-
-Returns the details for a specific destination for a consumer.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```include_certificate_data``` - Will return the imported SSL Certificate that will be used, if any. (Default is false) (example: true)
-
-
-###List Consumer Destination
-
-_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations_
-
-Returns a collection of destinations for a consumer and bucket.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
-
-#### Query Parameters
-
-* ```destination_key``` - Name for the bucket.
-
-
-###Delete Consumer Destination
-
-_**DELETE** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
-
-Deletes a destination for a consumer.
-
-#### URI Path Parameters
-
-* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
-* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
-* ```consumer_id``` -  (example: my_customer_id)
-* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
-
 Gateway
 ------
 
@@ -1244,6 +1103,147 @@ Removes a consumer from a particular application.
 * ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
 * ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
 * ```consumer_id``` -  (example: my_customer_id)
+
+###Create Consumer Destination
+
+_**POST** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations_
+
+Adds an destination for a consumer.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+* ```consumer_id``` -  (example: my_customer_id)
+
+#### POST Parameters
+
+* ```name``` (required) - Name for the destination. (example: My Final Destination)
+* ```endpoint_url``` (required) - The URL the messages should be sent to. (example: http://mydomain.com/webhook-endpoint)
+* ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
+* ```status``` - The status of the bucket, defaults to active.
+* ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
+* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
+* ```authentication_type``` - The type of authentication to apply to incoming requests.
+* ```retry_policy_id``` - The retry algorithm that will be used for failed attempts.
+* ```retry_count``` - The number of times the hook will be retried.
+* ```retry_interval``` - The interval for which the retries will be set.
+* ```verify_ssl``` - Ensure the SSL certificate is trusted and valid.  If false, this will bypass this protection.
+* ```headers_to_include``` - A comma delimited list of custom headers to include.
+* ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
+* ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
+* ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
+* ```rate_limit``` - The max rate for webhooks to be relayed.  This will default to your plan max. (example: 5)
+
+```js
+{
+	name: 'My Final Destination'
+	endpoint_url: 'http://mydomain.com/webhook-endpoint'
+	delivery_order: 'random'
+	message_method: 'GET'
+	event_filters: 'account.created,message.sent'
+	header_prefix: 'Webhooks'
+	alert_on_failure: 'bob@mail.com,john@email.com'
+	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
+	rate_limit: '5'
+}
+```
+
+
+###Update Consumer Destination
+
+_**PUT** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
+
+Updates the details of an destination for a consumer.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+* ```consumer_id``` -  (example: my_customer_id)
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+
+#### POST Parameters
+
+* ```name``` (required) - Name for the input. (example: My Final Destination)
+* ```endpoint_url``` (required) - The URL the messages should be sent to.
+* ```delivery_order``` - How the deliveries should operate.  Valid options are random or fifo.  The default is random (example: random)
+* ```status``` - The status of the bucket, defaults to active.
+* ```message_method``` - The HTTP method the message will be sent with.  If null the method will pass through. (example: GET)
+* ```event_filters``` - The events that this input should be triggerd for.  This can be a comma delimited list of events. (example: account.created,message.sent)
+* ```authentication_type``` - The type of authentication to apply to incoming requests.
+* ```retry_policy_id``` - The retry algorithm that will be used for failed attempts.
+* ```retry_count``` - The number of times the hook will be retried.
+* ```retry_interval``` - The interval for which the retries will be set.
+* ```verify_ssl``` - Ensure the SSL certificate is trusted and valid.  If false, this will bypass this protection.
+* ```headers_to_include``` - A comma delimited list of custom headers to include.
+* ```header_prefix``` - The prefix of the custom headers that will be included.  The default is Webhooks (example: Webhooks)
+* ```alert_on_failure``` - A comma delimited list of email addresses to alert when a webhook enters the failed status. (example: bob@mail.com,john@email.com)
+* ```recipe_id``` - If a recipe should be applied to messages coming through this destination it can be specified. (example: REe987d754d82a419e8c54c2185ed0ef29)
+* ```rate_limit``` - The max rate for webhooks to be relayed.  This will default to your plan max. (example: 5)
+
+```js
+{
+	name: 'My Final Destination'
+	delivery_order: 'random'
+	message_method: 'GET'
+	event_filters: 'account.created,message.sent'
+	header_prefix: 'Webhooks'
+	alert_on_failure: 'bob@mail.com,john@email.com'
+	recipe_id: 'REe987d754d82a419e8c54c2185ed0ef29'
+	rate_limit: '5'
+}
+```
+
+
+###Get Consumer Destination
+
+_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
+
+Returns the details for a specific destination for a consumer.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+* ```consumer_id``` -  (example: my_customer_id)
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```include_certificate_data``` - Will return the imported SSL Certificate that will be used, if any. (Default is false) (example: true)
+
+
+###List Consumer Destination
+
+_**GET** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations_
+
+Returns a collection of destinations for a consumer and bucket.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+* ```consumer_id``` -  (example: my_customer_id)
+* ```input_id``` -  (example: INe987d754d82a419e8c54c2185ed0ef29)
+
+#### Query Parameters
+
+* ```destination_key``` - Name for the bucket.
+
+
+###Delete Consumer Destination
+
+_**DELETE** /v1/accounts/:account_id/applications/:application_id/consumers/:consumer_id/destinations/:destination_id_
+
+Deletes a destination for a consumer.
+
+#### URI Path Parameters
+
+* ```account_id``` -  (example: ACe987d754d82a419e8c54c2185ed0ef29)
+* ```application_id``` -  (example: APe987d754d82a419e8c54c2185ed0ef29)
+* ```consumer_id``` -  (example: my_customer_id)
+* ```destination_id``` -  (example: OUe987d754d82a419e8c54c2185ed0ef29)
 
 ###Send webhook to consumer
 
