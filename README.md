@@ -18,9 +18,15 @@ Authentication
 
 You authenticate to the Webhooks API by providing one of your API keys in the request. You can manage your API keys from your account. You can have multiple API keys active at one time. Your API keys carry many privileges, so be sure to keep them secret!
 
-Authentication to the API occurs via HTTP Basic Auth. Provide your API key as the basic auth username. You do not need to provide a password.
+Authentication to the API can occur via a header value or via a query string parameter.
 
-All API requests must be made over HTTPS. Calls made over plain HTTP will fail. You must authenticate for all requests.
+### Via HTTP Header:
+
+>curl -X GET -H Authorization:'Bearer {your-api-token}' https://api.webhooks.io/v1/accounts/{account_id}/users
+
+### Via Query String Param:
+
+>curl -X GET https://api.webhooks.io/v1/accounts/{account_id}/users?_token={your-api-token}
 
 Versioning
 ------
